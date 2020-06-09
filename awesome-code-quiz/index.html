@@ -16,28 +16,36 @@
 
     <div class="container">
         <div class="row">
-        <p class="col-10" id="highscores">
-            View Highscores
-        </p>
-        <p class="col-2" id="time">Time:</p>
+            <p class="col-10" id="highscores">
+                View Highscores
+            </p>
+            <p class="col-2" id="time">Time:</p>
         </div>
-    </div>
-
-    
-    <div class="container">
-        <h2>Coding Quiz</h2>
-        <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers
-        will penalize your score/time by ten seconds!
-        </p>
-        <button type="button" class="btn btn-primary" id="startBtn">
-            Start Quiz
-        </button>
-    </div>
-
    
 
+    <div class="container" id='landingPage'>
+        <h2>Coding Quiz</h2>
+        <p class="instruction">Try to answer the following code-related questions within the time limit. Keep in mind incorrect answers will penalize your score/time by ten seconds!</p>
+        <button type="button" class="btn btn-primary" id="startBtn">Start Quiz</button>
+    </div>
 
-<script src="timer.js"></script>
+    <div id='questionPage'>
+        <h2 class="questions"></h2>
+        <!-- <button type="button" class="btn btn-primary"> -->
+        <ul id="answerChoices">
+            <li id="0"></li>
+            <li id="1"></li>
+            <li id="2"></li>
+            <li id="3"></li>
+        </ul>
+        </button>
+    </div>
+</div>
+
+    <script src="timer.js"></script>
+    <script src="arrayQs.js"></script>
+     <!-- <script src="test.js"></script> -->
+     <!-- <script src="buttons.js"></script> -->
 </body>
 
 </html>
