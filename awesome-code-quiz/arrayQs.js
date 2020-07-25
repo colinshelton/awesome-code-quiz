@@ -19,9 +19,32 @@ const questionAnswers = [
       "4. square brackets",
     ],
     correctAnswer: "3. parenthesis",
-  },
+  }
 ];
-let questionVar = [];
+
+function buildQuiz() {
+  // variable to store the html output 
+  const questionVar = [];
+
+  // and for each avaiable answer 
+  for (letter in currentQuestion.answers) {
+    // ...add an HTML radio button 
+    answers.push(
+      `<label>
+        <input type="radio" name="question${questionNumber}" value="${letter}">
+          ${letter} :
+          ${currentQuestion.answers[letter]}     
+      </label>`
+    );
+  }
+  // add this question and its answers to the output 
+  output.push(
+    `<div class="question"> ${currentQuestion.question} </div>
+    <div class= "answers"> ${answer.join('')} </div>`
+  );
+}
+
+let index = 0;
 
 //TIMER:
 let secondsLeft = 75;
@@ -29,38 +52,81 @@ startTimer.addEventListener("click", function setTime() {
   const timerInterval = setInterval(function () {
     secondsLeft--;
     timeEl.textContent = "Time: " + secondsLeft;
-    var counter = 0;
-    if (secondsLeft === 0) {
+
+    if (secondsLeft <= 0) {
+      secondsLeft = 0;
       clearInterval(timerInterval);
       sendMessage();
     }
   }, 1000);
   // adds timer to HTML
   function sendMessage() {
-    timeEl.textContent = "";
+    timeEl.textContent = "Time: 0";
   }
 });
 
+// // START QUIZ!!
+// startQuiz.addEventListener('click', function () {
+//   landingEl.style.display = 'none';
+
+//   for (let i = 0; i < questionAnswers.length - 1; i++) {
+
+//     // call QUESTIONS
+//     let h2 = document.querySelector(".questions");
+//     const question = questionAnswers[index];
+//     h2.innerHTML = questionAnswers[i].question;
+
+//     // call CHOICES 
+//     let choices = document.createElement('button');
+//     const answer = questionAnswers[index]
+//     choices.innerHTML = questionAnswers[index].answers;
+
+//     // append to a button 
+//     let ul = document.querySelector('.answerChoices');
+//     ul.append(choices);
+
+//     // what happens when user selects answer 
+//     choices.addEventListener('click', function () {
+//       if (this.value.innerHTML !== questionAnswers[index].correctAnswer) {
+//         alert("incorrect");
+//         secondsLeft = secondsLeft - 10;
+//       }
+//       if (this.value.innerHTML === questionAnswers[index].correctAnswer) {
+//         index++;
+//       }
+//     })
+
+
+//   };
+// });
+
 //START QUIZ!!
 startQuiz.addEventListener("click", function () {
-  //leave landing objects
+  // //leave landing objects
   landingEl.style.display = "none";
+  let ul = document.querySelector(".answerChoices");
 
-  //loop QUESTIONs, display in h2
-  for (let i = 0; i < questionAnswers.length; i++) {
-    //display current question to user
-    let question = document.querySelector(".questions");
-    question.textContent = questionAnswers[0].question; //look to answer choices, may need to change index to 'i' -OR question counter??
+
+  //display current question to user
+  let question = document.querySelector(".questions");
+  const currentQ = questionAnswers[index];
+  let li = document.createElement("li");
+  question.textContent = questionAnswers[index].question;
+  while (question.hasChildNodes()) {
+    question.removeChild(question.firstChild);
   }
+  ul.appendChild(question);
+  question.appendChild(li)
+
   //loop ANSWERS, display in appended button
   let answers = questionAnswers[0].answers;
   console.log(answers);
-  for (let i = 0; i < answers.length; i++) {
+  for (let i = 0; i < currentQ.answers.length; i++) {
     let button = document.createElement("button");
     button.innerHTML = answers[i];
     console.log(answers[i]);
     //2.append somewhere
-    let ul = document.querySelector(".answerChoices");
+    //let ul = document.querySelector(".answerChoices");
     ul.appendChild(button);
     //3. add event handler
     button.addEventListener("click", function checkAnswer() {
@@ -92,13 +158,7 @@ startQuiz.addEventListener("click", function () {
     });
   }
 });
-//Question Counter -->move inside start quiz function in logical place
-let questionCount = 0;
-function nextQuestion(event) {
-  let question = questionAnswers[questionCount]; //compare
-  questionCount++;
-  if (event === questionAnswers.correctAnswer);
-}
+
 
 // End Quiz
 function endQuiz() {
